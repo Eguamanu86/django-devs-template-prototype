@@ -1,2 +1,2 @@
-# django-devs-template-prototype
-Témplate prototipo inicial 
+# -django-devs-template
+Plantilla inicial para proyectos en Django
