@@ -23,33 +23,44 @@
                         </div>
 
                         <!-- title-->
-                        <h4 class="mt-0">Sign In</h4>
-                        <p class="text-muted mb-4">Enter your email address and password to access account.</p>
+                        <h4 class="mt-0">Inicio de Sesion</h4>
+                        <p class="text-muted mb-2">Ingreso usuario/email y contraseña.</p>
+
+                        <div class="text-muted mb-1" style="height: 40px;">
+                            <div id="id-message-error" class="alert alert-danger d-flex p-1 align-items-center d-none" role="alert">
+
+                            </div>
+                        </div>
+
 
                         <!-- form -->
                         <form id="id-form-login">
+                            {% csrf_token %}
                             <div class="mb-3">
-                                <label for="emailaddress" class="form-label">Email address</label>
-                                <input class="form-control" type="email" id="-id-username" required="" placeholder="Enter your email">
+                                <label for="emailaddress" class="form-label">Usuario o Correo Electronico</label>
+                                {{ form.username }}
                             </div>
                             <div class="mb-3">
-                                <a href="pages-recoverpw.html" class="text-muted float-end"><small>Forgot your password?</small></a>
-                                <label for="password" class="form-label">Password</label>
+                                <label for="password" class="form-label">Contraseña</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="id-password" class="form-control" placeholder="Enter your password">
+                                    {{ form.password }}
                                     <div class="input-group-text" data-password="false">
                                         <span class="password-eye"></span>
                                     </div>
                                 </div>
+                                <a href="pages-recoverpw.html" class="text-muted float-end"><small>Olvidaste tu contraseña?</small></a>
                             </div>
                             <div class="mb-3">
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="checkbox-signin">
-                                    <label class="form-check-label" for="checkbox-signin">Remember me</label>
+                                    <label class="form-check-label" for="checkbox-signin">No soy robot</label>
                                 </div>
                             </div>
                             <div class="d-grid mb-0 text-center">
-                                <button class="btn btn-primary" type="submit"><i class="mdi mdi-login"></i> Log In </button>
+                               <button class="btn btn-primary" type="submit">
+                                    <span id="id-span-loading" class="mdi mdi-login" role="status" aria-hidden="true"></span>
+                                    Iniciar sesion
+                                </button>
                             </div>
                             <!-- social-->
                             <div class="text-center mt-4">
@@ -98,40 +109,52 @@
 {% endblock %}
 
 {% block srcjs %}
-    <script src="/static/models/users.js"></script>
+    <script src="/static/app/security.js"></script>
 {% endblock %}
 
 {% block scriptjs %}
 <script>
-    $(function(){
+    const formLogin = document.querySelector('#id-form-login')
+    const spanLoading = document.querySelector('#id-span-loading')
+    const messageError = document.querySelector('#id-message-error')
 
-        $('#id-form-login').on({
-            submit: function (e) {
+    formLogin.addEventListener('submit', async (event)=>{
 
-                e.preventDefault();
-                const userName = $('#id-username').val();
-                const password = $('#id-password').val();
+        event.preventDefault()
+        messageError.classList.add('d-none')
 
-                let user = new User(userName, password);
-                await user.loginRequest();
+        try{
+            const userName = document.querySelector('#id_username').value
+            const password = document.querySelector('#id_password').value
 
-                // $.ajax({
-                //   url: '/seguridad/session/',
-                //   data: frmData,
-                //   method: 'POST',
-                //   dataType: 'json',
-                //   cache: false,
-                //   contentType: false,
-                //   processData: false
-                // }).done(function (data) {
+            const user = new User(undefined,userName, password)
+            const security = new Security(user)
 
-                // }).fail(function () {
+            spanLoading.className=''
+            spanLoading.classList.add('spinner-border','spinner-border-sm','me-1')
 
-                // });
+            await security.userLogin()
+            window.location.href = '/'
 
+        }catch (error) {
+
+            spanLoading.className=''
+            spanLoading.classList.add('mdi', 'mdi-login')
+
+            let message;
+            if (error instanceof Response) {
+                responseError= await error.json()
+                message = responseError.errors.join(',')
+            }else{
+                message = error.message ?? error
             }
-        });
 
-    })
+            messageError.classList.remove('d-none')
+            messageError.classList.add('d-block')
+            messageError.innerHTML = `<i class="dripicons-warning"></i> ${message}`
+
+        }
+    });
+
 </script>
 {% endblock %}

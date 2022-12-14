@@ -18,8 +18,7 @@ class LoginAuthView(LoginView):
         form.fields['username'].widget.attrs = {
             'class': 'form-control form-control-md',
             'placeholder': 'Ingrese su username',
-            'autocomplete': 'off',
-            'autofocus': True
+            'autofocus': True,
         }
         form.fields['password'].widget.attrs = {
             'class': 'form-control form-control-md',
@@ -33,7 +32,6 @@ class LoginAuthView(LoginView):
         if request.user.is_authenticated and login_different != request.path:
             return redirect(reverse_lazy('login_authenticated'))
         return super().get(request, *args, **kwargs)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

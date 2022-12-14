@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.views import View
 from security.functions import addUserData
 
-class HomeView(View):
-    #login_url = '/security/login'
+class HomeView(LoginRequiredMixin, View):
+    login_url = '/security/login'
     redirect_field_name = 'redirect_to'
 
     def get(self, request, *args, **kwargs):
