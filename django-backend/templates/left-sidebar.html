@@ -1,0 +1,36 @@
+ <div class="leftside-menu">
+    <!-- LOGO -->
+    <a href="index.html" class="logo text-center logo-light">
+        <span class="logo-lg">
+            <img src="/static/assets/images/unemi.png" alt="" height="40">
+        </span>
+        <span class="logo-sm">
+            <img src="/static/assets/images/unemi.png" alt="" height="20">
+        </span>
+    </a>
+
+    <div class="h-100" id="leftside-menu-container" data-simplebar="">
+
+        <!--- Sidemenu -->
+        <ul class="side-nav">
+
+            {% for gc in module_grup_categories %}
+
+                <li class="side-nav-title side-nav-item">{{ gc.main_category.name }}</li>
+
+                {% for cm in gc.get_grup_category_modules %}
+                    <li class="side-nav-item">
+                        <a href="{{ cm.module.url }}" class="side-nav-link">
+                            <i class="{{ cm.module.icon }}"></i>
+                            <span> {{ cm.module.name }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+
+            {% endfor %}
+
+        <div class="clearfix"></div>
+
+    </div>
+
+</div>

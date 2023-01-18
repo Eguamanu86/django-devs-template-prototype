@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
-{% block header %}
-{% endblock %}
+{% block header %}{% endblock %}
 
 {% block body-class %} class="authentication-bg pb-0" data-layout-config='{"darkMode":false}' {% endblock %}
+
+{% block letf-sidebar-navbar %}{% endblock %}
+{% block class-content-page %}{% endblock %}
 
 {% block container-main %}
     <div class="auth-fluid">
@@ -108,6 +110,9 @@
         </div>
 {% endblock %}
 
+{% block header-topbar %}
+{% endblock %}
+
 {% block srcjs %}
     <script src="/static/app/security.js"></script>
 {% endblock %}
@@ -134,7 +139,7 @@
             spanLoading.classList.add('spinner-border','spinner-border-sm','me-1')
 
             await security.userLogin()
-            window.location.href = '/'
+            window.location.href = '/dashboard'
 
         }catch (error) {
 

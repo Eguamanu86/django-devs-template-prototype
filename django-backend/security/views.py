@@ -9,7 +9,18 @@ class HomeView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         data = {
-            'title': "Home Global Registry"
+            'title': "Home web"
         }
         addUserData(request, data)
         return render(request, 'security/index.html', data)
+
+class Dashboard(LoginRequiredMixin, View):
+    login_url = '/security/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, *args, **kwargs):
+        data = {
+            'title': "Dashboard panel"
+        }
+        addUserData(request, data)
+        return render(request, 'security/dashboard.html', data)
