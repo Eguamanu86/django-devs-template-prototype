@@ -2,7 +2,7 @@ from django.contrib import admin
 from customers.models import *
 # Register your models here.
 admin.site.register(Category)
-class CustumerAdmin(admin.ModelAdmin):
+class CustomerAdmin(admin.ModelAdmin):
     list_display = (
         'code',
         'identification',
@@ -22,4 +22,4 @@ class CustumerAdmin(admin.ModelAdmin):
         return not obj.deleted
     status.boolean = True
 
-admin.site.register(Custumer, CustumerAdmin)
+admin.site.register(Customer, CustomerAdmin)

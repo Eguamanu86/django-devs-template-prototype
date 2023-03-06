@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
 THIRD_PARTY_APPS = [
     'crispy_forms',
+    'crispy_bootstrap5',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -51,7 +52,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    'django_extensions',
+    #'django_extensions',
     'security',
     'customers'
 ]
@@ -195,4 +196,6 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 CORS_ALLOW_ALL_ORIGINS = True
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

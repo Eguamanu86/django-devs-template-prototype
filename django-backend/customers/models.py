@@ -26,13 +26,13 @@ class Category(ModelBase):
         ModelBase.save(self)
 
 # Create your models here.
-class Custumer(ModelBaseAudited):
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, null=True)
+class Customer(ModelBaseAudited):
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, null=True, verbose_name='Categoría')
     code = models.CharField(max_length=15, blank=True, null=True, verbose_name='Código')
-    identification = models.CharField(max_length=10, blank=True, null=True, unique=True)
-    first_names = models.CharField(max_length=100)
-    last_names = models.CharField(max_length=100)
-    names = models.CharField(max_length=191, blank=True, null=True)
+    identification = models.CharField(max_length=10, verbose_name="C.Identidad", blank=True, null=True, unique=True)
+    first_names = models.CharField(max_length=100, verbose_name="Nombres")
+    last_names = models.CharField(max_length=100, verbose_name="Apellidos")
+    names = models.CharField(max_length=191, blank=True, null=True, verbose_name="Nombres y apellidos")
     gender = models.CharField(
         verbose_name="Genero",
         choices=Gender.choices,
@@ -43,7 +43,7 @@ class Custumer(ModelBaseAudited):
     address = models.CharField(max_length=1024, verbose_name="Dirección", blank=True, null=True)
     telephone = models.CharField(max_length=20, verbose_name="Teléfono", blank=True, null=True)
     email = models.CharField(max_length=150, verbose_name="Email", blank=True, null=True)
-    status = models.BooleanField(default=True)
+    status = models.BooleanField(default=True, verbose_name="Estado")
 
     def __str__(self):
         return f"{self.names}"
@@ -70,6 +70,3 @@ class Custumer(ModelBaseAudited):
         self.names = f"{self.first_names} {self.last_names}".strip()
 
         ModelBaseAudited.save(self)
-
-    def calculate(self):
-        return None

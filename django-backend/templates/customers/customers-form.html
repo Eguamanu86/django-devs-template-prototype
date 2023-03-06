@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block container-main %}
+
+    <div class="container">
+        <form class="row g-3 needs-validation" method="POST" action="" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="card shadow mt-2">
+                <div class="card-header p-3 h5">
+                    <i class="fa-solid fa-address-card"></i>
+                    Datos del Cliente
+                </div>
+                <div class="card-body">
+                    <div class="row g-2">
+                        <div class="col-md">
+                            {{ form.identification|as_crispy_field }}
+                        </div>
+                        <div class="col-md-4 ">
+                            {{ form.first_names|as_crispy_field }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.last_names|as_crispy_field }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ form.category|as_crispy_field }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ form.gender|as_crispy_field }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.city|as_crispy_field }}
+                        </div>
+
+                        <div class="col-md-2">
+                            {{ form.address|as_crispy_field }}
+                        </div>
+
+                        <div class="col-md-2">
+                           {{ form.telephone|as_crispy_field }}
+                        </div>
+                        <div class="col-md-2">
+                           {{ form.email|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer p-2">
+                    <button class="btn btn-success" id="id-btn-agregar">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        Guardar cliente
+                    </button>
+
+                    <a class="btn btn-secondary" href="{{ back_url }}">
+                        <i class="fa-solid fa-back"></i>
+                        Cancelar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--script src="./app.js" type="module"-->
+
+{% endblock %}
