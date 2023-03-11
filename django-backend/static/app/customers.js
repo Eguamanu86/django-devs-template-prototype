@@ -1,9 +1,9 @@
 const tbody = document.querySelector("#id-customers-table > tbody")
 
 tbody.addEventListener('click', async (event) => {
-  event.preventDefault();
   // capturamos la accion-depositar monto
   if (event.target.closest('a[rel="accion-eliminar"]')) {
+    event.preventDefault();
     const customerId = event.target.dataset.id
     if (confirm('Esta seguro de eliminar el registro de cliente')) {
 
